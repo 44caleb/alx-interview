@@ -19,5 +19,4 @@ def pascal_triangle(n):
         base_row.append(1)
         triangle.append(base_row)
         prev_row = base_row
-    
     return triangle
