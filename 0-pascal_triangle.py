@@ -1,9 +1,15 @@
 #!/usr/bin/python3
-"""pascal triangle task"""
+"""
+function returns a list of integers representing
+pascal's triangle of numbers
+"""
 
 
 def pascal_triangle(n):
-    """returns a list of integers representing pascal's triangle"""
+    """
+    returns a list of integers representing pascal's
+    triangle
+    """
     if n <= 0:
         return []
 
