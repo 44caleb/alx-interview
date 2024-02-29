@@ -1,28 +1,25 @@
 #!/usr/bin/python3
-"""Making Change"""
+"""Making change"""
 
 
-def make_change(coins, total):
-    """
-    Returns the minimum number of coins required to make the given total,
-    or -1 if it's not possible to make the total with the given coins.
-    """
+def makeChange(coins, total):
+    """function to create change"""
     if total <= 0:
         return 0
-
-    # Sort coins in descending order
-    coins.sort(reverse=True)
-
-    count = 0
-    remaining_total = total
-
-    for coin in coins:
-        if remaining_total >= coin:
-            count += remaining_total // coin
-            remaining_total %= coin
-
-    if remaining_total == 0:
-        return count
-    else:
-        return -1
-
+    elif total > 0:
+        newList = sorted(coins[:])
+        newList = list(reversed(newList))
+        count = 0
+        value = total + 0
+        index = 0
+        while value >= 0 and (index < len(newList)):
+            if value >= newList[index]:
+                value = value - newList[index]
+                count += 1
+            elif value < newList[index]:
+                index += 1
+        if index == len(newList):
+            if value != 0:
+                return -1
+            elif value == 0:
+                return count
