@@ -1,49 +1,57 @@
 #!/usr/bin/python3
-"""prime game module"""
+"""Prime game module"""
 
 
 def isWinner(x, nums):
-    """prime game"""
-
-    def isPrime(num):
-        """checks if num is prime"""
-        if num < 2:
-            return False
-        for i in range(2, int(num ** 0.5) + 1):
-            if num % i == 0:
-                return False
-        return True
-
-    def getPrimesSet(num):
-        """returns prime set"""
-        primes = [n for n in range(1, num + 1) if isPrime(n)]
-        return set(primes)
-
-    def playGame(num):
-        """starts the game"""
-        primesSet = getPrimesSet(num)
-        isMariaTurn = True
-        while primesSet:
-            if isMariaTurn:
-                nextMove = min(primesSet)
-            else:
-                nextMove = max(primesSet)
-            primesSet -= set(range(nextMove, num + 1, nextMove))
-            isMariaTurn = not isMariaTurn
-        return isMariaTurn
-
+    """determines game winner"""
     mariaWinsCount = 0
     benWinsCount = 0
 
     for num in nums:
-        if playGame(num):
-            mariaWinsCount += 1
-        else:
+        roundsSet = list(range(1, num + 1))
+        primesSet = primes_in_range(1, num)
+
+        if not primesSet:
             benWinsCount += 1
+            continue
+
+        isMariaTurns = True
+
+        while(True):
+            if not primesSet:
+                if isMariaTurns:
+                    benWinsCount += 1
+                else:
+                    mariaWinsCount += 1
+                break
+
+            smallestPrime = primesSet.pop(0)
+            roundsSet.remove(smallestPrime)
+
+            roundsSet = [x for x in roundsSet if x % smallestPrime != 0]
+
+            isMariaTurns = not isMariaTurns
 
     if mariaWinsCount > benWinsCount:
         return "Maria"
-    elif mariaWinsCount < benWinsCount:
+
+    if mariaWinsCount < benWinsCount:
         return "Ben"
-    else:
-        return None
+
+    return None
+
+
+def is_prime(n):
+    """Returns True if prime"""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+
+def primes_in_range(start, end):
+    """Returns a list of prime numbers"""
+    primes = [n for n in range(start, end+1) if is_prime(n)]
+    return primes
