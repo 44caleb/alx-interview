@@ -3,7 +3,10 @@
 
 
 def isWinner(x, nums):
+    """prime game"""
+
     def isPrime(num):
+        """checks if num is prime"""
         if num < 2:
             return False
         for i in range(2, int(num ** 0.5) + 1):
@@ -12,10 +15,12 @@ def isWinner(x, nums):
         return True
 
     def getPrimesSet(num):
+        """returns prime set"""
         primes = [n for n in range(1, num + 1) if isPrime(n)]
         return set(primes)
 
     def playGame(num):
+        """starts the game"""
         primesSet = getPrimesSet(num)
         isMariaTurn = True
         while primesSet:
